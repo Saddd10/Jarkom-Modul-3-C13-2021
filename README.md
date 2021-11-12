@@ -270,6 +270,12 @@ Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy di
   ![img](./img/9b.png)
 - Restart service squid dengan perintah `service squid restart`.
 
+#### Node Loguetown
+
+- Untuk mengeceknya kita bisa mengakses website melalui node Loguetown dengan perintah `lynx super.franky.c13.com`. Jika berhasil maka akan muncul autentikasi
+
+  ![img](./img/9c.png)
+
 ## Soal 10
 
 Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi hanya dapat diakses setiap hari Senin-Kamis pukul 07.00-11.00 dan setiap hari Selasa-Jum’at pukul 17.00-03.00 keesokan harinya (sampai Sabtu pukul 03.00).
@@ -309,7 +315,7 @@ Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet 
 
 - Untuk mengeceknya kita bisa mengakses website melalui node Loguetown dengan perintah `lynx super.franky.c13.com`. Jika diluar jam kerja maka website tidak bisa diakses(_Forbidden_)
 
-![img](./img/10b.png)
+  ![img](./img/10b.png)
 
 ## Soal 11
 
