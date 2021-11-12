@@ -47,24 +47,56 @@ Setting network configuration pada semua node sesuai dengan Prefix IP dari kelom
 #### Foosha
 
 ```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 192.190.1.1
+	netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+	address 192.190.2.1
+	netmask 255.255.255.0
+
+auto eth3
+iface eth3 inet static
+	address 192.190.3.1
+	netmask 255.255.255.0
 
 ```
 
 #### EniesLobby (DNS Master)
 
 ```
+auto eth0
+iface eth0 inet static
+	address 192.190.2.2
+	netmask 255.255.255.0
+	gateway 192.190.2.1
 
 ```
 
 #### Water7 (Proxy Server)
 
 ```
+auto eth0
+iface eth0 inet static
+	address 192.190.2.3
+	netmask 255.255.255.0
+	gateway 192.190.2.1
 
 ```
 
 #### Jipangu (DHCP Server)
 
 ```
+auto eth0
+iface eth0 inet static
+	address 192.190.2.4
+	netmask 255.255.255.0
+	gateway 192.190.2.1
 
 ```
 
@@ -458,18 +490,55 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 - Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
 
 ```
+acl AVAILABLE_WORKING_1 time MTWH 07:00-11:00
+acl AVAILABLE_WORKING_2 time TWHF 17:00-24:00
+acl AVAILABLE_WORKING_3 time WHFA 00:00-03:00
 
+dns_nameservers 192.190.2.2
+
+acl download url_regex -i \.png$ \.jpg$ 
+http_port 5000
+visible_hostname jualbelikapal.c13.com
+
+auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+auth_param basic children 5
+auth_param basic realm Proxy
+auth_param basic credentialsttl 2 hours
+auth_param basic casesensitive on
+acl USERS proxy_auth REQUIRED
+
+acl pindah dstdomain .google.com
+deny_info http://super.franky.c13.com pindah
+http_reply_access deny pindah
+
+delay_pools 2
+
+delay_class 1 1
+delay_parameters 1 -1/-1
+delay_access 1 deny all
+
+delay_class 2 1
+delay_parameters 2 10000/5000000
+delay_access 2 allow download
+delay_access 2 deny all
+
+
+http_access allow USERS AVAILABLE_WORKING_1
+http_access allow USERS AVAILABLE_WORKING_2
+http_access allow USERS AVAILABLE_WORKING_3
+
+
+http_access deny all
 ```
+![img](./img/12a.png)
+![img](./img/12b.png)
 
 - Restart service squid
 
 #### Node Loguetown
 
 - Uji dengan mendownload file berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini apabila delay bandwith berhasil
-
-```
-
-```
+![img](./img/12c.png)
 
 ## Soal 13
 
@@ -480,8 +549,47 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 - Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
 
 ```
+acl AVAILABLE_WORKING_1 time MTWH 07:00-11:00
+acl AVAILABLE_WORKING_2 time TWHF 17:00-24:00
+acl AVAILABLE_WORKING_3 time WHFA 00:00-03:00
 
+dns_nameservers 192.190.2.2
+
+acl download url_regex -i \.png$ \.jpg$ 
+http_port 5000
+visible_hostname jualbelikapal.c13.com
+
+auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+auth_param basic children 5
+auth_param basic realm Proxy
+auth_param basic credentialsttl 2 hours
+auth_param basic casesensitive on
+acl USERS proxy_auth REQUIRED
+
+acl pindah dstdomain .google.com
+deny_info http://super.franky.c13.com pindah
+http_reply_access deny pindah
+
+delay_pools 2
+
+delay_class 1 1
+delay_parameters 1 -1/-1
+delay_access 1 deny all
+
+delay_class 2 1
+delay_parameters 2 10000/5000000
+delay_access 2 allow download
+delay_access 2 deny all
+
+
+http_access allow USERS AVAILABLE_WORKING_1
+http_access allow USERS AVAILABLE_WORKING_2
+http_access allow USERS AVAILABLE_WORKING_3
+
+
+http_access deny all
 ```
+![img](./img/13a.png)
 
 - Restart service squid
 
@@ -489,6 +597,6 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 
 - Uji dengan mendownload file selain berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini
 
-```
+![img](./img/13b.png)
 
-```
+- Karena speed tidak dibatasi tidak terlihat kecepatan downloadnya karena file yang didownload tidak terlalu besar ukurannya
