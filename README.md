@@ -224,7 +224,14 @@ Loguetown digunakan sebagai client Proxy agar transaksi jual beli dapat terjamin
 
   ![img](./img/8a.png)
 
-- Restart service DHCP Server dengan perintah `service squid restart`.
+- Restart service squid dengan perintah `service squid restart`.
+
+#### Node Loguetown
+
+- Kemudian pada node client, yaitu Loguetown jalankan perintah berikut untuk mengaktifkan proxynya
+  ```
+  export http_proxy="http://192.190.2.3:5000"
+  ```
 
 ## Soal 9
 
@@ -234,20 +241,34 @@ Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy di
 
 - Lakukan update dengan perintah `apt-get update`.
 - Install `Apache Utils` dengan perintah `apt-get install apache2-utils`.
-- Ketikkan perintah dibawah untuk menambahkan username dan password. Agar bisa terenkripsi MD5 maka tambahkan `-m` dan hilangan `-c` untuk menghindari membuat file baru.
+- Ketikkan perintah dibawah untuk menambahkan username dan password. Agar bisa terenkripsi MD5 maka tambahkan `-m` dan hilangkan `-c` untuk menghindari membuat file baru. Lalu ada `-b` yang berfungsi agar bisa langsung memasukkan password
 
-```
-
-```
+  ```
+  htpasswd -cbm /etc/squid/passwd luffybelikapalc13 luffy_c13
+  htpasswd -bm /etc/squid/passwd zorobelikapalc13 zoro_c13
+  ```
 
 - Edit file `squid.conf` dengan perintah `vim /etc/squid/squid.conf` seperti berikut.
 
-```
+  ```
+  http_port 5000
+  visible_hostname jualbelikapal.c13.com
 
-```
+  auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+  auth_param basic children 5
+  auth_param basic realm Proxy
+  auth_param basic credentialsttl 2 hours
+  auth_param basic casesensitive on
+  acl USERS proxy_auth REQUIRED
 
-- Cek apakah password sudah terenkripsi di file ``.
-- Restart service DHCP Server dengan perintah `service isc-dhcp-server restart`.
+  http_access allow USERS
+  ```
+
+  ![img](./img/9a.png)
+
+- Cek apakah password sudah terenkripsi di file `/etc/squid/passwd`.
+  ![img](./img/9b.png)
+- Restart service squid dengan perintah `service squid restart`.
 
 ## Soal 10
 
