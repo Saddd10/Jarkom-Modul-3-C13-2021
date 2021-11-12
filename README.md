@@ -237,11 +237,18 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 #### Node Water7
 
 - Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
+
+````
+````
+
 - Restart service squid
 
 #### Node Loguetown
 
 - Uji dengan mendownload file berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini apabila delay bandwith berhasil
+
+````
+````
 
 ## Soal 13
 
@@ -250,8 +257,15 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 #### Node Water7
 
 - Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
+
+````
+````
+
 - Restart service squid
 
 #### Node Loguetown
 
 - Uji dengan mendownload file selain berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini
+
+````
+````
