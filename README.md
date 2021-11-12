@@ -321,13 +321,133 @@ Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet 
 
 Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar mudah mengingat website transaksi jual beli kapal. Setiap mengakses google.com, akan diredirect menuju super.franky.yyy.com dengan website yang sama pada soal shift modul 2. Web server super.franky.yyy.com berada pada node Skypie.
 
-#### Node Water7
+#### Node EniesLobby
 
-- Ubah nameserver untuk menyambungkan Node Water7 dengan Node Enieslobby pada file `/etc/resolv.conf`.
+- Buat domain untuk `super.franky.c13.com` dengan menambahkan baris berikut di `/etc/bind/named.conf.local`
 
-#### Node Enieslobby
+  ```
+  zone "super.franky.c13.com"{
+        type master;
+        file "/etc/bind/jarkom/super.franky.c13.com";
+  };
+  ```
+
+- Buat direktori untuk file konfigurasinya dengan perintah berikut
+
+  ```
+  mkdir jarkom
+  ```
+
+- Lalu atur konfigurasinya pada file `/etc/bind/jarkom/super.franky.c13.com` menjadi seperti ini
+
+  ```
+  $TTL    604800
+  @       IN      SOA     super.franky.c13.com. root.super.franky.c13.com. (
+                                2         ; Serial
+                          604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                          604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      super.franky.c13.com.
+  @       IN      A       192.190.3.69
+  www     IN      CNAME   super.franky.c13.com.
+  ```
+
+  ![img](./img/11b.png)
+
+- Kemudian restart service dari bind9 dengan perintah
+  ```
+  service bind9 restart
+  ```
 
 #### Node Skypie
+
+- Pertama dengan install webserver apache2, wget, dan unzip dengan perintah berikut
+
+  ```
+  apt-get update
+  apt-get install apache2 wget unzip -y
+  ```
+
+- Kemudian mengatur konfigurasi webserver nya dengan edit file di `/etc/apache2/sites-available/super.franky.c13.com.conf` menjadi seperti berikut
+
+  ```
+  <VirtualHost *:80>
+          ServerAdmin webmaster@localhost
+          DocumentRoot /var/www/super.franky
+          ServerName super.franky.c13.com
+          ServerAlias www.super.franky.c13.com
+
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+  ```
+
+- Lalu aktifkan konfigurasi nya dengan perintah berikut
+
+  ```
+  a2ensite super.franky.c13.com
+  ```
+
+- Restart service apache
+
+  ```
+  service apache2 restart
+  ```
+
+- Download file assets website dengan menggunakan wget
+
+  ```
+  wget -P /var/www https://raw.githubusercontent.com/FeinardSlim/Praktikum-Modul-2-Jarkom/main/super.franky.zip
+  ```
+
+- Unzip file yang sudah didownload
+  ```
+  unzip /var/www/super.franky.zip -d /var/www/
+  ```
+
+#### Node Water7
+
+- Edit file `squid.conf` dengan perintah `vim /etc/squid/squid.conf` seperti berikut.
+
+  ```
+  acl AVAILABLE_WORKING_1 time MTWH 07:00-11:00
+  acl AVAILABLE_WORKING_2 time TWHF 17:00-23:59
+  acl AVAILABLE_WORKING_3 time WHFA 00:00-03:00
+
+  dns_nameservers 192.190.2.2
+  http_port 5000
+  visible_hostname jualbelikapal.c13.com
+
+  auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+  auth_param basic children 5
+  auth_param basic realm Proxy
+  auth_param basic credentialsttl 2 hours
+  auth_param basic casesensitive on
+  acl USERS proxy_auth REQUIRED
+
+  acl pindah dstdomain .google.com
+  deny_info http://super.franky.c13.com pindah
+  http_reply_access deny pindah
+
+
+  http_access allow USERS AVAILABLE_WORKING_1
+  http_access allow USERS AVAILABLE_WORKING_2
+  http_access allow USERS AVAILABLE_WORKING_3
+
+  http_access deny all
+  ```
+
+  ![img](./img/11a.png)
+
+- Restart service squid dengan perintah `service squid restart`.
+
+#### Node Loguetown
+
+- Untuk mengecek apakah berhasil redirect, kita bisa akses google dengan perintah `lynx google.com` di node Loguetown. Maka akan langsung di redirect ke `super.franky.c13.com`
+
+  ![img](./img/11c.png)
 
 ## Soal 12
 
