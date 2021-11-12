@@ -234,6 +234,24 @@ Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar m
 
 Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencari harta karun di super.franky.yyy.com. Tugas pencarian dibagi menjadi dua misi, Luffy bertugas untuk mendapatkan gambar (.png, .jpg), sedangkan Zoro mendapatkan sisanya. Karena Luffy orangnya sangat teliti untuk mencari harta karun, ketika ia berhasil mendapatkan gambar, ia mendapatkan gambar dan melihatnya dengan kecepatan 10 kbps.
 
+#### Node Water7
+
+- Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
+- Restart service squid
+
+#### Node Loguetown
+
+- Uji dengan mendownload file berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini apabila delay bandwith berhasil
+
 ## Soal 13
 
 Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kecepatan kapal Zoro tidak dibatasi ketika sudah mendapatkan harta yang diinginkannya.
+
+#### Node Water7
+
+- Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
+- Restart service squid
+
+#### Node Loguetown
+
+- Uji dengan mendownload file selain berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini
