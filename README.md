@@ -197,9 +197,15 @@ options {
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
-  ```
-
-  ```
+```
+#auto eth0
+#iface eth0 inet static
+#       address 192.190.1.2
+#       netmask 255.255.255.0
+#       gateway 192.190.1.1
+auto eth0
+iface eth0 inet dhcp                 
+```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
 
@@ -207,9 +213,15 @@ options {
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
-  ```
-
-  ```
+```
+#auto eth0
+#iface eth0 inet static
+#       address 192.190.1.3
+#       netmask 255.255.255.0
+#       gateway 192.190.1.1
+auto eth0
+iface eth0 inet dhcp                    
+```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
 
@@ -217,9 +229,15 @@ options {
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
-  ```
-
-  ```
+```
+#auto eth0
+#iface eth0 inet static
+#       address 192.190.3.2
+#       netmask 255.255.255.0
+#       gateway 192.190.3.1
+auto eth0
+iface eth0 inet dhcp
+```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
 
@@ -227,9 +245,15 @@ options {
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
-  ```
-
-  ```
+```
+#auto eth0
+#iface eth0 inet static
+#       address 192.190.3.3
+#       netmask 255.255.255.0
+#       gateway 192.190.3.1
+auto eth0
+iface eth0 inet dhcp
+```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
 
