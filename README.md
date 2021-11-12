@@ -215,11 +215,16 @@ Loguetown digunakan sebagai client Proxy agar transaksi jual beli dapat terjamin
 - Install Squid dengan perintah `apt-get install squid`.
 - Edit file `squid.conf` dengan perintah `vim /etc/squid/squid.conf` seperti berikut.
 
-```
+  ```
+  http_port 5000
+  visible_hostname jualbelikapal.c13.com
 
-```
+  http_access allow all
+  ```
 
-- Restart service DHCP Server dengan perintah `service isc-dhcp-server restart`.
+  ![img](./img/8a.png)
+
+- Restart service DHCP Server dengan perintah `service squid restart`.
 
 ## Soal 9
 
@@ -278,8 +283,9 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 
 - Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
 
-````
-````
+```
+
+```
 
 - Restart service squid
 
@@ -287,8 +293,9 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 
 - Uji dengan mendownload file berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini apabila delay bandwith berhasil
 
-````
-````
+```
+
+```
 
 ## Soal 13
 
@@ -298,8 +305,9 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 
 - Tambahkan perintah berikut ke dalam file `/etc/squid/squid.conf` seperti gambar dibawah ini
 
-````
-````
+```
+
+```
 
 - Restart service squid
 
@@ -307,5 +315,6 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 
 - Uji dengan mendownload file selain berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini
 
-````
-````
+```
+
+```
