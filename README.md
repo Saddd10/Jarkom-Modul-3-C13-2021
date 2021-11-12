@@ -133,6 +133,10 @@ Ada beberapa kriteria yang ingin dibuat oleh Luffy dan Zoro, yaitu:
 
 - Restart service isc-dhcp-server dengan perintah `service isc-dhcp-server restart`
 
+#### Node Loguetown
+
+- Ketik `ip a` untuk melihat apakah ip DHCP server berhasil dipinjam seperti gambar berikut
+
 ## Soal 4
 
 Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.30 - [prefix IP].3.50.
@@ -147,9 +151,21 @@ Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.30 - [prefix
 
 - Restart service isc-dhcp-server dengan perintah `service isc-dhcp-server restart`
 
+Node TotoLand
+
+- Ketik `ip a` untuk melihat apakah ip DHCP server berhasil dipinjam seperti gambar berikut
+
 ## Soal 5
 
 Client mendapatkan DNS dari EniesLobby dan client dapat terhubung dengan internet melalui DNS tersebut.
+
+#### Node EnniesLobby
+
+- Tambahkan perintah pada `/etc/bind/named.conf.options` seperti baris berikut
+
+````
+
+````
 
 #### Node Loguetown
 
