@@ -276,13 +276,40 @@ Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet 
 
 #### Node Water7
 
-- Edit file `acl.conf` dengan perintah `vim /etc/squid/acl.conf` seperti berikut.
+- Edit file `squid.conf` dengan perintah `vim /etc/squid/squid.conf` seperti berikut.
 
-```
+  ```
+  acl AVAILABLE_WORKING_1 time MTWH 07:00-11:00
+  acl AVAILABLE_WORKING_2 time TWHF 17:00-23:59
+  acl AVAILABLE_WORKING_3 time WHFA 00:00-03:00
 
-```
+  dns_nameservers 192.190.2.2
+  http_port 5000
+  visible_hostname jualbelikapal.c13.com
 
-- Restart service DHCP Server dengan perintah `service isc-dhcp-server restart`.
+  auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+  auth_param basic children 5
+  auth_param basic realm Proxy
+  auth_param basic credentialsttl 2 hours
+  auth_param basic casesensitive on
+  acl USERS proxy_auth REQUIRED
+
+  http_access allow USERS AVAILABLE_WORKING_1
+  http_access allow USERS AVAILABLE_WORKING_2
+  http_access allow USERS AVAILABLE_WORKING_3
+
+  http_access deny all
+  ```
+
+  ![img](./img/10a.png)
+
+- Restart service squid dengan perintah `service squid restart`.
+
+#### Node Loguetown
+
+- Untuk mengeceknya kita bisa mengakses website melalui node Loguetown dengan perintah `lynx super.franky.c13.com`. Jika diluar jam kerja maka website tidak bisa diakses(_Forbidden_)
+
+![img](./img/10b.png)
 
 ## Soal 11
 
