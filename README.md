@@ -116,6 +116,8 @@ Dan Foosha sebagai DHCP Relay.
 
 - Kosongkan kolom berikutnya.
 
+![img](./img/2.png)
+
 ## Soal 3
 
 Ada beberapa kriteria yang ingin dibuat oleh Luffy dan Zoro, yaitu:
@@ -128,14 +130,26 @@ Ada beberapa kriteria yang ingin dibuat oleh Luffy dan Zoro, yaitu:
 - Ketik `vim /etc/dhcp/dhcpd.conf` untuk mengedit file `dhcpd.conf`, lalu tambahkan beris berikut
 
   ```
-
+    subnet 192.190.1.0 netmask 255.255.255.0 {
+   	   range 192.190.1.20 192.190.1.99; #Nomer 3: range pembagian ip
+  	   range 192.190.1.150 192.190.1.169; #Nomer 3: range pembagian ip
+  	   option routers 192.190.1.1;
+ 	   option broadcast-address 192.190.1.255;
+ 	   option domain-name-servers 190.190.2.2; #Nomer 5: dns dari enieslobby
+ 	   default-lease-time 360; #Nomer 6 : Waktu peminjaman 6 menit
+ 	   max-lease-time 7200; #Nomer 6: Waktu maks 120 menit
+}
   ```
+  ![img](./img/3a.png)
+  
 
 - Restart service isc-dhcp-server dengan perintah `service isc-dhcp-server restart`
 
 #### Node Loguetown
 
 - Ketik `ip a` untuk melihat apakah ip DHCP server berhasil dipinjam seperti gambar berikut
+
+![img](./img/3b.png)
 
 ## Soal 4
 
@@ -146,14 +160,25 @@ Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.30 - [prefix
 - Ketik `vim /etc/dhcp/dhcpd.conf` untuk mengedit file `dhcpd.conf`, lalu tambahkan beris berikut
 
   ```
-
+	subnet 192.190.3.0 netmask 255.255.255.0 {
+    		range 192.190.3.30 192.190.3.50; #Nomer 4: range pembagian ip
+    		option routers 192.190.3.1;
+    		option broadcast-address 192.190.3.255;
+    		option domain-name-servers 192.190.2.2; #Nomer 5: dns dari enieslobby
+    		default-lease-time 720; #Nomer 6 : Waktu peminjaman 12 menit
+    		max-lease-time 7200;  #Nomer 6: Waktu maks 120 menit
+	}
   ```
+
+![img](./img/4a.png)
 
 - Restart service isc-dhcp-server dengan perintah `service isc-dhcp-server restart`
 
 Node TotoLand
 
 - Ketik `ip a` untuk melihat apakah ip DHCP server berhasil dipinjam seperti gambar berikut
+
+![img](./img/4b.png)
 
 ## Soal 5
 
@@ -164,7 +189,7 @@ Client mendapatkan DNS dari EniesLobby dan client dapat terhubung dengan interne
 - Tambahkan perintah pada `/etc/bind/named.conf.options` seperti baris berikut
 
 ```
-options {
+	options {
         directory "/var/cache/bind";
 
         // If there is a firewall between you and nameservers you want
@@ -189,73 +214,83 @@ options {
 
         auth-nxdomain no;    # conform to RFC1035
         listen-on-v6 { any; };
-};
+	};
 
 ```
+
+![img](./img/5a.png)
 
 #### Node Loguetown
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
 ```
-#auto eth0
-#iface eth0 inet static
-#       address 192.190.1.2
-#       netmask 255.255.255.0
-#       gateway 192.190.1.1
-auto eth0
-iface eth0 inet dhcp
+	#auto eth0
+	#iface eth0 inet static
+	#       address 192.190.1.2
+	#       netmask 255.255.255.0
+	#       gateway 192.190.1.1
+	auto eth0
+	iface eth0 inet dhcp
 ```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
+
+![img](./img/5b.png)
 
 #### Node Alabasta
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
 ```
-#auto eth0
-#iface eth0 inet static
-#       address 192.190.1.3
-#       netmask 255.255.255.0
-#       gateway 192.190.1.1
-auto eth0
-iface eth0 inet dhcp
+	#auto eth0	
+	#iface eth0 inet static
+	#       address 192.190.1.3
+	#       netmask 255.255.255.0
+	#       gateway 192.190.1.1
+	auto eth0
+	iface eth0 inet dhcp
 ```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
+
+![img](./img/5c.png)
 
 #### Node Tottoland
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
 ```
-#auto eth0
-#iface eth0 inet static
-#       address 192.190.3.2
-#       netmask 255.255.255.0
-#       gateway 192.190.3.1
-auto eth0
-iface eth0 inet dhcp
+	#auto eth0
+	#iface eth0 inet static
+	#       address 192.190.3.2
+	#       netmask 255.255.255.0
+	#       gateway 192.190.3.1
+	auto eth0
+	iface eth0 inet dhcp
 ```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
+
+![img](./img/5d.png)
 
 #### Node Skypie
 
 - Edit file `interfaces` dengan perintah `vim /etc/network/interfaces` seperti berikut.
 
 ```
-#auto eth0
-#iface eth0 inet static
-#       address 192.190.3.3
-#       netmask 255.255.255.0
-#       gateway 192.190.3.1
-auto eth0
-iface eth0 inet dhcp
+	#auto eth0
+	#iface eth0 inet static
+	#       address 192.190.3.3
+	#       netmask 255.255.255.0
+	#       gateway 192.190.3.1
+	auto eth0
+	iface eth0 inet dhcp
 ```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
+
+![img](./img/5d.png)
 
 ## Soal 6
 
