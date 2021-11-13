@@ -324,6 +324,43 @@ Loguetown digunakan sebagai client Proxy agar transaksi jual beli dapat terjamin
 
 - Restart service squid dengan perintah `service squid restart`.
 
+#### Node EniesLobby
+
+- Atur domain `jualbelikapal.c13.com` dengan mengedit file `/etc/bind/named.conf.local` dan tambahkan baris berikut
+
+  ```
+  zone "jualbelikapal.c13.com" {
+        type master;
+        file "/etc/bind/jarkom/jualbelikapal.c13.com";
+  };
+  ```
+
+- Kemudian buat direktori jarkom dengan perintah berikut
+
+  ```
+  mkdir jarkom
+  ```
+
+- Lalu atur konfigurasi domain nya pada file `/etc/bind/jarkom/jualbelikapal.c13.com` dan edit menjadi berikut
+
+  ```
+  $TTL    604800
+  @       IN      SOA     jualbelikapal.c13.com. root.jualbelikapal.c13.com. (
+                                2         ; Serial
+                          604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                          604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      jualbelikapal.c13.com.
+  @       IN      A       192.190.2.3
+  ```
+
+- Jika sudah bisa restart service bind9 dengan perintah berikut
+  ```
+  service bind9 restart
+  ```
+
 #### Node Loguetown
 
 - Kemudian pada node client, yaitu Loguetown jalankan perintah berikut untuk mengaktifkan proxynya
