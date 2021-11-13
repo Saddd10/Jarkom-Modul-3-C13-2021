@@ -138,9 +138,10 @@ Ada beberapa kriteria yang ingin dibuat oleh Luffy dan Zoro, yaitu:
  	   option domain-name-servers 190.190.2.2; #Nomer 5: dns dari enieslobby
  	   default-lease-time 360; #Nomer 6 : Waktu peminjaman 6 menit
  	   max-lease-time 7200; #Nomer 6: Waktu maks 120 menit
-}
+	}
   ```
-  ![img](./img/3a.png)
+
+![img](./img/3a.png)
   
 
 - Restart service isc-dhcp-server dengan perintah `service isc-dhcp-server restart`
