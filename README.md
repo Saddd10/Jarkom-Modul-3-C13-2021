@@ -163,7 +163,7 @@ Client mendapatkan DNS dari EniesLobby dan client dapat terhubung dengan interne
 
 - Tambahkan perintah pada `/etc/bind/named.conf.options` seperti baris berikut
 
-````
+```
 options {
         directory "/var/cache/bind";
 
@@ -190,8 +190,8 @@ options {
         auth-nxdomain no;    # conform to RFC1035
         listen-on-v6 { any; };
 };
-        
-````
+
+```
 
 #### Node Loguetown
 
@@ -204,7 +204,7 @@ options {
 #       netmask 255.255.255.0
 #       gateway 192.190.1.1
 auto eth0
-iface eth0 inet dhcp                 
+iface eth0 inet dhcp
 ```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
@@ -220,7 +220,7 @@ iface eth0 inet dhcp
 #       netmask 255.255.255.0
 #       gateway 192.190.1.1
 auto eth0
-iface eth0 inet dhcp                    
+iface eth0 inet dhcp
 ```
 
 - Cek nameserver pada file `vim /etc/resolv.conf`.
@@ -562,7 +562,7 @@ acl AVAILABLE_WORKING_3 time WHFA 00:00-03:00
 
 dns_nameservers 192.190.2.2
 
-acl download url_regex -i \.png$ \.jpg$ 
+acl download url_regex -i \.png$ \.jpg$
 http_port 5000
 visible_hostname jualbelikapal.c13.com
 
@@ -596,6 +596,7 @@ http_access allow USERS AVAILABLE_WORKING_3
 
 http_access deny all
 ```
+
 ![img](./img/12a.png)
 ![img](./img/12b.png)
 
@@ -604,7 +605,7 @@ http_access deny all
 #### Node Loguetown
 
 - Uji dengan mendownload file berekstensi `.png` atau `.jpg` terlihat seperti gambar dibawah ini apabila delay bandwith berhasil
-![img](./img/12c.png)
+  ![img](./img/12c.png)
 
 ## Soal 13
 
@@ -621,7 +622,7 @@ acl AVAILABLE_WORKING_3 time WHFA 00:00-03:00
 
 dns_nameservers 192.190.2.2
 
-acl download url_regex -i \.png$ \.jpg$ 
+acl download url_regex -i \.png$ \.jpg$
 http_port 5000
 visible_hostname jualbelikapal.c13.com
 
@@ -655,6 +656,7 @@ http_access allow USERS AVAILABLE_WORKING_3
 
 http_access deny all
 ```
+
 ![img](./img/13a.png)
 
 - Restart service squid
